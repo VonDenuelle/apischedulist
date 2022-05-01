@@ -55,7 +55,7 @@ class Users
       if ($stmt->execute($user)) {
         // Get Inserted ID and get details to start session
         $insertedID = $this->conn->lastInsertId();
-        $query = 'SELECT email,name FROM users WHERE id = ?';
+        $query = 'SELECT id,email,name FROM users WHERE id = ?';
         $stmt = $this->conn->prepare($query);
         $stmt->execute([$insertedID]);
 
