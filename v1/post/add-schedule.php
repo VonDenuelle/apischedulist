@@ -29,6 +29,8 @@ $schedule->title = $_POST['title'];
 $schedule->description = $_POST['description'];
 $schedule->vibrate = $_POST['vibrate'] == 'true' ? 0 : 1;
 $schedule->toggle = $_POST['toggle'] == 'true' ? 0 : 1;
+$schedule->notify = $_POST['notify']; 
+$schedule->priority = $_POST['priority'] == 'true' ? 0 : 1;
 
 if ($schedule->AddSchedule() > 0) {  // RETURNS ROWCOUNT
     echo json_encode(array('message' => 'Schedule Succesfully Created'));

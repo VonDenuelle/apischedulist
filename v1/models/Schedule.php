@@ -13,7 +13,8 @@ class Schedule
     public $description;
     public $vibrate;
     public $toggle;
-
+    public $notify;
+    public $priority;
 
     // Constructor with DB
     public function __construct($db)
@@ -33,7 +34,9 @@ class Schedule
         title, 
         description, 
         vibrate,
-        toggle
+        toggle,
+        notify_before,
+        priority
         ) Values(
             :userid,
             :day,
@@ -41,7 +44,9 @@ class Schedule
             :title,
             :description,
             :vibrate,
-            :toggle 
+            :toggle,
+            :notify,
+            :priority
             )';
 
         $stmt = $this->conn->prepare($query);
@@ -53,6 +58,8 @@ class Schedule
         $this->description = htmlspecialchars($this->description);
         $this->vibrate = htmlspecialchars($this->vibrate);
         $this->toggle = htmlspecialchars($this->toggle);
+        $this->priority = htmlspecialchars($this->priority);
+        $this->notify = htmlspecialchars($this->notify);
 
 
         $sched = array(
@@ -62,7 +69,9 @@ class Schedule
             'title' => $this->title,
             'description' => $this->description,
             'vibrate' => $this->vibrate,
-            'toggle' => $this->toggle
+            'toggle' => $this->toggle,
+            'priority' => $this->priority,
+            'notify' => $this->notify
         );
 
         if ($stmt->execute($sched)) {
@@ -152,7 +161,10 @@ class Schedule
             title = :title,
             description = :description,
             vibrate = :vibrate,
-            toggle = :toggle
+            toggle = :toggle,
+            notify_before = :notify,
+            priority = :priority
+
 
         WHERE
             id = :id';
@@ -165,6 +177,8 @@ class Schedule
         $this->vibrate = htmlspecialchars($this->vibrate);
         $this->toggle = htmlspecialchars($this->toggle);
         $this->id = htmlspecialchars($this->id);
+        $this->priority = htmlspecialchars($this->priority);
+        $this->notify = htmlspecialchars($this->notify);
 
         $sched = array(
             'time' => $this->time,
@@ -172,7 +186,10 @@ class Schedule
             'description' => $this->description,
             'vibrate' => $this->vibrate,
             'toggle' => $this->toggle,
-            'id' => $this->id
+            'id' => $this->id,
+            'notify' => $this->notify,
+            'priority' => $this->priority
+
         );
 
        

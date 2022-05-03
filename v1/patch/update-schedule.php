@@ -29,6 +29,8 @@ $schedule->description = $data->description;
 $schedule->vibrate = $data->vibrate === true ? 0 : 1; //boolean to tinyint
 $schedule->toggle = $data->toggle === true ? 0 : 1;
 $schedule->id = $data->id;
+$schedule->notify = $data->notify;
+$schedule->priority = $data->priority  == 'true' ? 0 : 1;
 
 if ($schedule->updateSchedule()) { 
     echo json_encode(array('message' => 'Schedule Succesfully Updated'));
