@@ -31,9 +31,10 @@ $schedule->toggle = $data->toggle === true ? 0 : 1;
 $schedule->id = $data->id;
 $schedule->notify = $data->notify;
 $schedule->priority = $data->priority  == 'true' ? 0 : 1;
+$schedule->ringtone = $data->ringtone;
 
-if ($schedule->updateSchedule()) { 
-    echo json_encode(array('message' => 'Schedule Succesfully Updated'));
+if ($res = $schedule->updateSchedule()) { 
+    echo json_encode(array('message' => 'Schedule Succesfully Updated', 'response' => $res));
 } else {
   $error = [
     'status' => 500,

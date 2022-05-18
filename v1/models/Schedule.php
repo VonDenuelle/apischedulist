@@ -15,6 +15,7 @@ class Schedule
     public $toggle;
     public $notify;
     public $priority;
+    public $ringtone;
 
     // Constructor with DB
     public function __construct($db)
@@ -36,7 +37,8 @@ class Schedule
         vibrate,
         toggle,
         notify_before,
-        priority
+        priority,
+        ringtone
         ) Values(
             :userid,
             :day,
@@ -46,7 +48,8 @@ class Schedule
             :vibrate,
             :toggle,
             :notify,
-            :priority
+            :priority,
+            :ringtone
             )';
 
         $stmt = $this->conn->prepare($query);
@@ -60,6 +63,7 @@ class Schedule
         $this->toggle = htmlspecialchars($this->toggle);
         $this->priority = htmlspecialchars($this->priority);
         $this->notify = htmlspecialchars($this->notify);
+        $this->ringtone = htmlspecialchars($this->ringtone);
 
 
         $sched = array(
@@ -71,7 +75,8 @@ class Schedule
             'vibrate' => $this->vibrate,
             'toggle' => $this->toggle,
             'priority' => $this->priority,
-            'notify' => $this->notify
+            'notify' => $this->notify,
+            'ringtone' => $this->ringtone
         );
 
         if ($stmt->execute($sched)) {
@@ -163,8 +168,8 @@ class Schedule
             vibrate = :vibrate,
             toggle = :toggle,
             notify_before = :notify,
-            priority = :priority
-
+            priority = :priority,
+            ringtone =  :ringtone
 
         WHERE
             id = :id';
@@ -179,6 +184,7 @@ class Schedule
         $this->id = htmlspecialchars($this->id);
         $this->priority = htmlspecialchars($this->priority);
         $this->notify = htmlspecialchars($this->notify);
+        $this->ringtone = htmlspecialchars($this->ringtone);
 
         $sched = array(
             'time' => $this->time,
@@ -188,13 +194,20 @@ class Schedule
             'toggle' => $this->toggle,
             'id' => $this->id,
             'notify' => $this->notify,
-            'priority' => $this->priority
+            'priority' => $this->priority,
+            'ringtone' => $this->ringtone
 
         );
 
        
         if ( $stmt->execute($sched)) {
-            return  true;
+            $sql = 'SELECT * FROM schedule WHERE id = :id';
+            $stmt = $this->conn->prepare($sql);
+
+            if ($stmt->execute(['id' => $this->id])) {
+                $row = $stmt->fetch();
+                return  $row;
+            }
         } else {
             printf("Error: %s.\n", $stmt->error);
             return false;
