@@ -162,6 +162,7 @@ class Schedule
     public function updateSchedule()
     {
         $query = 'UPDATE schedule SET 
+            day = :day,
             time = :time,
             title = :title,
             description = :description,
@@ -176,6 +177,7 @@ class Schedule
 
         $stmt = $this->conn->prepare($query);
 
+        $this->day = htmlspecialchars($this->day);
         $this->time = htmlspecialchars($this->time);
         $this->title = htmlspecialchars($this->title);
         $this->description = htmlspecialchars($this->description);
@@ -187,6 +189,7 @@ class Schedule
         $this->ringtone = htmlspecialchars($this->ringtone);
 
         $sched = array(
+            'day' => $this->day,
             'time' => $this->time,
             'title' => $this->title,
             'description' => $this->description,

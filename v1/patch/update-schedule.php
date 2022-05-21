@@ -23,6 +23,7 @@ $schedule = new Schedule($db);
 // JSon for patch methods (update)
 $data = json_decode(file_get_contents("php://input"));
 
+$schedule->day = $data->day;
 $schedule->time = $data->time;
 $schedule->title = $data->title;
 $schedule->description = $data->description;
